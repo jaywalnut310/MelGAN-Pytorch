@@ -34,10 +34,14 @@ def stft(y, scale='linear'):
     raise NotImplementedError("Avaliable scaling methods are: linear, log")
 
 
-def mu_law(x, n_bits=16):
+def mu_law(x, n_bits=16, inversion=False):
   mu = (2**n_bits - 1)
-  x = torch.sign(x) * torch.log(1 + mu * torch.abs(x)) / torch.log(1 + mu)
-  return x
+  if not inversion:
+    x = torch.sign(x) * torch.log(1 + mu * torch.abs(x)) / math.log(1 + mu)
+    return x
+  else:
+    x = torch.sign(x) * (torch.exp(torch.abs(x) * math.log(1 + mu)) - 1) / mu
+    return x
 
 
 def get_same_padding(kernel_size, dilation=1):

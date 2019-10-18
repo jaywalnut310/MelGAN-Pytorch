@@ -14,15 +14,15 @@ PyTorch 1.2.0 & python 3.6 & Librosa
 
 #### Step 2. Preprocessing (Preparing Mel Spectrogram)
 
-`python preprocessing.py --in_dir ljspeech --out_dir DATASETS/ljspeech`
+`python preprocessing.py --in_dir ljspeech --out_dir DATASETS/ljs`
 
 #### Step 3. Train MelGAN
 
--c: configurations & hyper parameteres in json
+-c: configurations & hyper parameters in json
 
 -m: model directory name
 
-`python train.py -c configs/base.json -m test`
+`python train.py -c configs/nci_000.json -m test`
 
 #### Step 4. Synthesize
 

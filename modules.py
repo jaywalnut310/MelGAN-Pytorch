@@ -53,16 +53,17 @@ class ResidualStack(nn.Module):
   
 
 class ResidualBlock(nn.Module):
-  def __init__(self, in_channels, out_channels, kernel_size, stride):
+  def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
     super().__init__()
     self.in_channels = in_channels
     self.out_channels = out_channels
     self.kernel_size = kernel_size
     self.stride = stride
+    self.padding = padding
 
     self.pre = nn.Sequential(
       nn.LeakyReLU(),
-      nn.ConvTranspose1d(in_channels, out_channels, kernel_size, stride, padding=stride//2)
+      nn.ConvTranspose1d(in_channels, out_channels, kernel_size, stride, padding=padding)
     )
     self.res_stack = ResidualStack(out_channels)
 

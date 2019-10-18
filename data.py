@@ -9,6 +9,7 @@ use_cuda = torch.cuda.is_available()
 max_time_steps = 16000
 upsample_conditional_features = True
 hop_length = 256
+div_scale = 4 # for multi-scale discriminator
 
 
 class LJspeechDataset(Dataset):
@@ -83,7 +84,7 @@ def collate_fn(batch):
             if upsample_conditional_features:
                 assert len(x) % len(c) == 0 and len(x) // len(c) == hop_length
 
-                max_steps = max_time_steps - max_time_steps % hop_length   # To ensure Divisibility
+                max_steps = max_time_steps - max_time_steps % (hop_length * div_scale)   # To ensure Divisibility
 
                 if len(x) > max_steps:
                     max_time_frames = max_steps // hop_length

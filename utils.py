@@ -6,6 +6,7 @@ import json
 import subprocess
 import torch
 
+
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging
 
@@ -41,6 +42,35 @@ def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path)
               'iteration': iteration,
               'optimizer': optimizer.state_dict(),
               'learning_rate': learning_rate}, checkpoint_path)
+
+
+def summarize(writer, global_step, scalars={}, histograms={}, images={}):
+  for k, v in scalars.items():
+    writer.add_scalar(k, v, global_step)
+  for k, v in histograms.items():
+    writer.add_histogram(k, v, global_step)
+  for k, v in images.items():
+    writer.add_image(k, v, global_step, dataformats='HWC')
+
+
+def plot_spectrogram_to_numpy(spectrogram):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pylab as plt
+    import numpy as np
+    fig, ax = plt.subplots()
+    im = ax.imshow(spectrogram, aspect="auto", origin="lower",
+                   interpolation='none')
+    plt.colorbar(im, ax=ax)
+    plt.xlabel("Frames")
+    plt.ylabel("Channels")
+    plt.tight_layout()
+
+    fig.canvas.draw()
+    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    plt.close()
+    return data
 
 
 def get_hparams(init=True):

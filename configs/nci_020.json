@@ -1,0 +1,22 @@
+{
+  "train": {
+    "use_cuda": true,
+    "with_tensorboard": false,
+    "log_interval": 10,
+    "seed": 1234,
+    "epochs": 10000,
+    "learning_rate": 1e-4,
+    "batch_size": 16,
+    "n_iter": 1,
+    "c_fm": 10
+  },
+  "data": {
+    "data_path": "./DATASETS/ljs/",
+    "n_channels": 80,
+    "mu_law": false
+  },
+  "model": {
+    "noise": false,
+    "condition_type": "b"
+  }
+}
