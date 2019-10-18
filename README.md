@@ -25,7 +25,7 @@ PyTorch 1.2.0 & python 3.6 & Librosa
 
 #### Step 4. Synthesize
 
-Run [Sample Test.ipynb](./Sample%20Test.ipynb)
+Run [Sample Test.ipynb](./Sample%20Test.ipynb). If it doesn't work, please try [nbviewer](https://nbviewer.jupyter.org/github/jaywalnut310/MelGAN-Pytorch/blob/master/Sample%20Test.ipynb)
 
 While improving, I share a temporary checkpoint of generator, which only runs about 140K steps: [link](https://drive.google.com/open?id=1vBKtGwR4n0rw0VqfuybC5Obd8BqJEGcL)
 Put the checkpoint file into "./logs/test/".
