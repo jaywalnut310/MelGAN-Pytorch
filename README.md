@@ -19,16 +19,21 @@ PyTorch 1.2.0 & python 3.6 & Librosa
 #### Step 3. Train MelGAN
 
 -c: configurations & hyper parameteres in json
+
 -m: model directory name
 
 `python train.py -c configs/base.json -m test`
 
 #### Step 4. Synthesize
 
-Run [Sample Test.ipynb](./Sample%20Test.ipynb). If it doesn't work, please try [nbviewer](https://nbviewer.jupyter.org/github/jaywalnut310/MelGAN-Pytorch/blob/master/Sample%20Test.ipynb)
+Run [Sample Test.ipynb](./Sample%20Test.ipynb). If it doesn't work, please try [nbviewer](https://nbviewer.jupyter.org/github/jaywalnut310/MelGAN-Pytorch/blob/master/Sample%20Test.ipynb).
 
 While improving, I share a temporary checkpoint of generator, which only runs about 140K steps: [link](https://drive.google.com/open?id=1vBKtGwR4n0rw0VqfuybC5Obd8BqJEGcL)
+
 Put the checkpoint file into "./logs/test/".
+
+You can get an synthesized audio sample of the temporary generator on the above notebook file.
+
 
 # References
 
