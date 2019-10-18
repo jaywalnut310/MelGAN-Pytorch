@@ -1,4 +1,4 @@
-# ClariNet
+# MelGAN
 A Pytorch Implementation of MelGAN (Mel Spectrogram --> Waveform)
 
 
