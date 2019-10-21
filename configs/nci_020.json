@@ -2,7 +2,7 @@
   "train": {
     "use_cuda": true,
     "with_tensorboard": false,
-    "log_interval": 10,
+    "log_interval": 100,
     "seed": 1234,
     "epochs": 10000,
     "learning_rate": 1e-4,
@@ -11,7 +11,7 @@
     "c_fm": 10
   },
   "data": {
-    "data_path": "./DATASETS/ljs/",
+    "data_path": "./DATASETS/ljspeech/",
     "n_channels": 80,
     "mu_law": false
   },

@@ -9,7 +9,7 @@ use_cuda = torch.cuda.is_available()
 max_time_steps = 16000
 upsample_conditional_features = True
 hop_length = 256
-div_scale = 4 # for multi-scale discriminator
+div_scale = 8 # for multi-scale discriminator
 
 
 class LJspeechDataset(Dataset):

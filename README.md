@@ -14,7 +14,7 @@ PyTorch 1.2.0 & python 3.6 & Librosa
 
 #### Step 2. Preprocessing (Preparing Mel Spectrogram)
 
-`python preprocessing.py --in_dir ljspeech --out_dir DATASETS/ljs`
+`python preprocessing.py --in_dir ljspeech --out_dir DATASETS/ljspeech`
 
 #### Step 3. Train MelGAN
 

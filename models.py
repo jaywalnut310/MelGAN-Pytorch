@@ -135,7 +135,7 @@ class MultiScaleDiscriminator(nn.Module):
 
     self.poolings = nn.ModuleList()
     self.poolings.append(nn.AvgPool1d(4, 2, 1))
-    self.poolings.append(nn.AvgPool1d(4, 2, 1))
+    self.poolings.append(nn.AvgPool1d(4, 4, 0))
 
     if condition_type=="u": # unconditional
       pass
