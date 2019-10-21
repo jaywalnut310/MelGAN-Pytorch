@@ -143,7 +143,7 @@ class MultiScaleDiscriminator(nn.Module):
       self.cond_convs = nn.ModuleList()
       self.cond_convs.append(nn.Conv1d(condition_channels, 1024, 1, 1))
       self.cond_convs.append(nn.Conv1d(1024, 1024, 4, 2, 1))
-      self.cond_convs.append(nn.Conv1d(1024, 1024, 4, 2, 1))
+      self.cond_convs.append(nn.Conv1d(1024, 1024, 4, 4, 0))
       if condition_type=="b": # both
         self.discs_ = nn.ModuleList()
         for _ in range(3):
