@@ -34,8 +34,8 @@ test_loader = DataLoader(test_dataset, batch_size=hps.train.batch_size, collate_
 
 generator = models.Generator(hps.data.n_channels, noise=hps.model.noise).to(device)
 discriminator = models.MultiScaleDiscriminator(hps.model.condition_type, hps.data.n_channels).to(device)
-optimizer_g = optim.Adam(generator.parameters(), lr=hps.train.learning_rate)
-optimizer_d = optim.Adam(discriminator.parameters(), lr=hps.train.learning_rate)
+optimizer_g = optim.Adam(generator.parameters(), lr=hps.train.learning_rate, betas=hps.train.betas)
+optimizer_d = optim.Adam(discriminator.parameters(), lr=hps.train.learning_rate, betas=hps.train.betas)
 
 
 def feature_matching_loss(rs_t, rs_f):
@@ -50,7 +50,6 @@ def train(epoch):
 
   generator.train()
   discriminator.train()
-  train_loss = 0
   for batch_idx, (x, c, _) in enumerate(train_loader):
     x, c = x.to(device), c.to(device)
     if hps.data.mu_law:
@@ -73,6 +72,8 @@ def train(epoch):
       for y_t, y_f in zip(ys_t, ys_f):
         loss_ds_t.append(torch.mean(torch.sum((y_t - 1)**2, [1, 2])))
         loss_ds_f.append(torch.mean(torch.sum((y_f)**2, [1, 2])))
+        # loss_ds_t.append(torch.mean((y_t - 1)**2))
+        # loss_ds_f.append(torch.mean((y_f)**2))
       loss_d = sum(loss_ds_t) + sum(loss_ds_f)
 
       loss_d.backward()
@@ -88,6 +89,7 @@ def train(epoch):
     loss_gs = []
     for y in ys_f:
       loss_gs.append(torch.mean(torch.sum((y - 1)**2, [1, 2])))
+      # loss_gs.append(torch.mean((y - 1)**2))
     loss_fm = feature_matching_loss(rets_t, rets_f)
     loss_g = sum(loss_gs) + hps.train.c_fm * loss_fm
 
@@ -115,7 +117,7 @@ def train(epoch):
           "x_gen": utils.plot_spectrogram_to_numpy(commons.stft(x_gen[:1,0])[0].data.cpu().numpy())}, 
         scalars=scalar_dict)
     global_step += 1
-  logger.info('====> Epoch: {} Average loss: {:.4f}'.format(epoch, train_loss / len(train_loader.dataset)))
+  logger.info('====> Epoch: {}'.format(epoch))
 
 
 if __name__ == "__main__":

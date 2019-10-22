@@ -6,6 +6,7 @@ import json
 import subprocess
 import torch
 
+MATPLOTLIB_FLAG = False
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging
@@ -54,23 +55,29 @@ def summarize(writer, global_step, scalars={}, histograms={}, images={}):
 
 
 def plot_spectrogram_to_numpy(spectrogram):
+  global MATPLOTLIB_FLAG
+  if not MATPLOTLIB_FLAG:
     import matplotlib
     matplotlib.use("Agg")
-    import matplotlib.pylab as plt
-    import numpy as np
-    fig, ax = plt.subplots()
-    im = ax.imshow(spectrogram, aspect="auto", origin="lower",
-                   interpolation='none')
-    plt.colorbar(im, ax=ax)
-    plt.xlabel("Frames")
-    plt.ylabel("Channels")
-    plt.tight_layout()
+    MATPLOTLIB_FLAG = True
+    mpl_logger = logging.getLogger('matplotlib')
+    mpl_logger.setLevel(logging.WARNING)
+  import matplotlib.pylab as plt
+  import numpy as np
+  
+  fig, ax = plt.subplots()
+  im = ax.imshow(spectrogram, aspect="auto", origin="lower",
+                  interpolation='none')
+  plt.colorbar(im, ax=ax)
+  plt.xlabel("Frames")
+  plt.ylabel("Channels")
+  plt.tight_layout()
 
-    fig.canvas.draw()
-    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-    data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    plt.close()
-    return data
+  fig.canvas.draw()
+  data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+  data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+  plt.close()
+  return data
 
 
 def get_hparams(init=True):

@@ -109,7 +109,6 @@ class Discriminator(nn.Module):
 
     # out
     x = self.post(x)
-    rets.append(x)
 
     if return_many:
       return x, rets
